@@ -1,0 +1,16 @@
+[
+    {
+        "model": "links.link",
+        "fields": {
+            "url": "https://www.howtographql.com/",
+            "description": "The Fullstack Tutorial for GraphQL"
+        }
+    },
+    {
+        "model": "links.link",
+        "fields": {
+            "url": "https://twitter.com/jonatasbaldin/",
+            "description": "The Jonatas Baldin Twitter"
+        }
+    }
+]
