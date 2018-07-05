@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+graphene = "*"
+graphene-django = "*"
+django-filter = "*"
+django-graphql-jwt = "*"
+
+[dev-packages]
+"flake8" = "*"
+
+[requires]
+python_version = "3.6"
