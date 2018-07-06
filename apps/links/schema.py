@@ -30,21 +30,36 @@ Queries
 
 
 class Query(graphene.ObjectType):
-    links = graphene.List(LinkType, search=graphene.String())
+    links = graphene.List(
+        LinkType,
+        search=graphene.String(),
+        first=graphene.Int(),
+        skip=graphene.Int(),
+    )
     votes = graphene.List(VoteType)
 
-    def resolve_links(self, info, search=None, **kwargs):
+    def resolve_links(self, info, search=None, first=None, skip=None, **kwargs):
         """
         Allow for searching URL or description
         """
+        # Prepare a queryset we can filter
+        qs = Link.objects.all()
+
         if search:
             filter = (
                 Q(url__icontains=search) |
                 Q(description__icontains=search)
             )
-            return Link.objects.filter(filter)
-        # Default to returning all links
-        return Link.objects.all()
+            qs.filter(filter)
+
+        if skip:
+            qs = qs[skip::]
+
+        if first:
+            qs = qs[:first]
+
+        # Return the queryset
+        return qs
 
     def resolve_votes(self, info, **kwargs):
         return Vote.objects.all()
