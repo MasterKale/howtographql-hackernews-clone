@@ -1,6 +1,8 @@
 import graphene
 from graphene_django import DjangoObjectType
 
+from apps.user.schema import UserType
+
 from .models import Link
 
 
@@ -31,6 +33,7 @@ class CreateLink(graphene.Mutation):
     id = graphene.Int()
     url = graphene.String()
     description = graphene.String()
+    posted_by = graphene.Field(UserType)
 
     class Arguments:
         # Specify data that can be passed in when calling this mutation
@@ -40,14 +43,20 @@ class CreateLink(graphene.Mutation):
     # Handle the actual mutation request
     def mutate(self, info, url, description):
         # Create the Django object
-        link = Link(url=url, description=description)
+        user = info.context.user
+        link = Link(
+            url=url,
+            description=description,
+            posted_by=user,
+        )
         link.save()
 
         # kwargs here should match the fields defined above when the class is initially defined
         return CreateLink(
             id=link.id,
             url=link.url,
-            description=link.description
+            description=link.description,
+            posted_by=link.posted_by,
         )
 
 
