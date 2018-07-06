@@ -1,6 +1,7 @@
 import graphene
 
 import apps.links.schema
+import apps.user.schema
 
 
 """
@@ -9,11 +10,19 @@ respective apps
 """
 
 
-class Query(apps.links.schema.Query, graphene.ObjectType):
+class Query(
+    apps.links.schema.Query,
+    apps.user.schema.Query,
+    graphene.ObjectType,
+):
     pass
 
 
-class Mutation(apps.links.schema.Mutation, graphene.ObjectType):
+class Mutation(
+    apps.links.schema.Mutation,
+    apps.user.schema.Mutation,
+    graphene.ObjectType,
+):
     pass
 
 
