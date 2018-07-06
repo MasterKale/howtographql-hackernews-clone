@@ -2,6 +2,7 @@ import graphene
 import graphql_jwt
 
 import apps.links.schema
+import apps.links.schema_relay
 import apps.user.schema
 
 
@@ -14,6 +15,7 @@ respective apps
 class Query(
     apps.links.schema.Query,
     apps.user.schema.Query,
+    apps.links.schema_relay.RelayQuery,
     graphene.ObjectType,
 ):
     pass
@@ -22,6 +24,7 @@ class Query(
 class Mutation(
     apps.links.schema.Mutation,
     apps.user.schema.Mutation,
+    apps.links.schema_relay.RelayMutation,
     graphene.ObjectType,
 ):
     token_auth = graphql_jwt.ObtainJSONWebToken.Field()
